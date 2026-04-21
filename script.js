@@ -43,7 +43,7 @@ const collectionsData = [
     title: "Империя",
     text: "Классика с декоративной выразительностью для интерьеров, где важны масштаб, ритм и статусная подача.",
     tones: "Белый / слоновая кость",
-    image: "./img/collection/empire-main.jpg",
+    image: "./img/empire-main.jpg",
     alt: "Коллекция Империя"
   },
   {
@@ -51,7 +51,7 @@ const collectionsData = [
     title: "Верди",
     text: "Орнамент и ритм в благородной подаче для выразительных классических интерьеров.",
     tones: "Слоновая кость",
-    image: "./img/collection/verdi-main.jpg",
+    image: "./img/verdi-main.jpg",
     alt: "Коллекция Верди"
   },
   {
@@ -59,7 +59,7 @@ const collectionsData = [
     title: "Кастилия",
     text: "Строгий классический строй с собранной геометрией и более контрастной подачей пространства.",
     tones: "Белый / чёрный",
-    image: "./img/collection/castilia-main.jpg",
+    image: "./img/castilia-main.jpg",
     alt: "Коллекция Кастилия"
   },
   {
@@ -67,7 +67,7 @@ const collectionsData = [
     title: "Версаль",
     text: "Масштаб, объём и статус для интерьеров, где важны выразительность и завершённость образа.",
     tones: "Белый глянец / бежевый глянец",
-    image: "./img/collection/versailles-main.jpg",
+    image: "./img/versailles-main.jpg",
     alt: "Коллекция Версаль"
   },
   {
@@ -75,7 +75,7 @@ const collectionsData = [
     title: "Сиртаки",
     text: "Современная классика для спокойных премиальных интерьеров с мягкой цветовой вариативностью.",
     tones: "Белый / миндаль / малахит",
-    image: "./img/collection/sirtaki-main.jpg",
+    image: "./img/sirtaki-main.jpg",
     alt: "Коллекция Сиртаки"
   },
   {
@@ -83,7 +83,7 @@ const collectionsData = [
     title: "Дубай",
     text: "Премиальная линия с чистой подачей, ясной геометрией и белым матовым исполнением.",
     tones: "Белый матовый",
-    image: "./img/collection/dubai-main.jpg",
+    image: "./img/dubai-main.jpg",
     alt: "Коллекция Дубай"
   }
 ];
