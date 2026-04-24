@@ -15,8 +15,19 @@ const navLinks = document.querySelectorAll(
 const sections = document.querySelectorAll("main section[id]");
 
 const revealElements = document.querySelectorAll(
-  ".section, .pause-section, .soft-card, .glass-card, .advantage-item, .photo-card, .steps-card, .form-side, .form-card"
+  ".section, .pause-section, .soft-card, .advantage-item, .photo-card, .steps-card, .form-side, .form-card"
 );
+
+/* ==========================================================================
+   BATH MODAL
+   ========================================================================== */
+
+const bathCards = document.querySelectorAll(".bath-card");
+const bathModal = document.getElementById("bathModal");
+const bathModalBackdrop = document.getElementById("bathModalBackdrop");
+const bathModalClose = document.getElementById("bathModalClose");
+const bathModalImage = document.getElementById("bathModalImage");
+const bathModalTitle = document.getElementById("bathModalTitle");
 
 /* ==========================================================================
    COLLECTIONS
@@ -107,7 +118,7 @@ let collectionAnimationTimeout = null;
 
 function getHeaderOffset() {
   if (window.innerWidth <= 768) return 84;
-  if (window.innerWidth <= 1024) return 92;
+  if (window.innerWidth <= 1180) return 96;
   return 108;
 }
 
@@ -125,6 +136,10 @@ function preloadImage(src) {
     img.onerror = reject;
     img.src = src;
   });
+}
+
+function isElementVisible(element) {
+  return !!element && !element.hidden;
 }
 
 /* ==========================================================================
@@ -299,8 +314,6 @@ function bindSmoothScroll() {
 function initReveal() {
   if (!revealElements.length) return;
 
-  body.classList.add("js");
-
   revealElements.forEach((element) => {
     element.classList.add("reveal");
   });
@@ -426,6 +439,67 @@ function initForm() {
 }
 
 /* ==========================================================================
+   BATH MODAL
+   ========================================================================== */
+
+function openBathModal(card) {
+  if (!bathModal || !bathModalImage || !bathModalTitle || !card) return;
+
+  const image = card.dataset.bathImage || "";
+  const title = card.dataset.bathTitle || "Ванна";
+  const alt = card.dataset.bathAlt || title;
+
+  bathModalImage.src = image;
+  bathModalImage.alt = alt;
+  bathModalTitle.textContent = title;
+
+  bathModal.hidden = false;
+  body.classList.add("modal-open");
+
+  requestAnimationFrame(() => {
+    bathModal.classList.add("is-open");
+  });
+}
+
+function closeBathModal() {
+  if (!bathModal) return;
+
+  bathModal.classList.remove("is-open");
+  bathModal.hidden = true;
+  body.classList.remove("modal-open");
+
+  if (bathModalImage) {
+    bathModalImage.src = "";
+    bathModalImage.alt = "";
+  }
+}
+
+function initBathModal() {
+  if (!bathCards.length || !bathModal) return;
+
+  bathCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      openBathModal(card);
+    });
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openBathModal(card);
+      }
+    });
+  });
+
+  if (bathModalBackdrop) {
+    bathModalBackdrop.addEventListener("click", closeBathModal);
+  }
+
+  if (bathModalClose) {
+    bathModalClose.addEventListener("click", closeBathModal);
+  }
+}
+
+/* ==========================================================================
    COLLECTIONS SHOWCASE
    ========================================================================== */
 
@@ -500,6 +574,7 @@ async function updateCollectionShowcase(index, { immediate = false } = {}) {
     collectionShowcaseImageCurrent.alt = item.alt;
     collectionShowcaseImageCurrent.style.transform = "scale(1.015)";
     collectionShowcaseImageCurrent.style.filter = "blur(0)";
+
     collectionShowcaseImageNext.src = item.image;
     collectionShowcaseImageNext.alt = "";
 
@@ -674,6 +749,22 @@ function initCollectionShowcase() {
 }
 
 /* ==========================================================================
+   GLOBAL KEYDOWN
+   ========================================================================== */
+
+function bindGlobalKeys() {
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      if (isElementVisible(bathModal)) {
+        closeBathModal();
+      } else if (mobileMenuOpen) {
+        closeMobileMenu();
+      }
+    }
+  });
+}
+
+/* ==========================================================================
    INIT
    ========================================================================== */
 
@@ -682,9 +773,11 @@ function init() {
   updateActiveNavLink();
   bindMenuEvents();
   bindSmoothScroll();
+  bindGlobalKeys();
   initReveal();
   initPhoneMask();
   initForm();
+  initBathModal();
   initCollectionShowcase();
 }
 
